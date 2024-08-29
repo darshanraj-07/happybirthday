@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Wishes for Mom ❤️</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Short+Stack&amp;family=Homemade+Apple&amp;display=swap'>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .paper {
+      position: absolute; /* Allow elements to be dragged */
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      padding: 15px;
+      background: white;
+      border: 2px solid black;
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .heart {
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: pink;
+      clip-path: polygon(50% 0%, 100% 38%, 76% 100%, 50% 75%, 24% 100%, 0 38%);
+    }
+    .play-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #f09ba0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+<!-- Background Audio -->
+<audio id="background-audio" loop>
+  <source src="mumma.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- A pen by Developer Rahul -->
+<div class="paper heart"></div>
+
+<div class="paper image">
+  <p>Dear Mom,</p>
+  <p>On this special day, I want to remind you how much you mean to me.</p>
+  <p>Thank you for your endless love and support. ❤️</p>
+</div>
+
+<div class="paper image">
+  <p>Happy Birthday to the most wonderful mom!</p>
+  <p>You are my guiding star, my inspiration, and my strength.</p>
+  <img src="mummy6.jpg" alt="Birthday mummy1" />
+</div>
+
+<div class="paper image">
+  <p>Your love has shaped me into who I am today.</p>
+  <p>May your day be filled with joy, love, and laughter!</p>
+  <img src="mummy5.jpg" alt="Birthday Image 2" />
+</div>
+
+<div class="paper red">
+  <p class="p1">You deserve all the happiness in the world, Mom.</p>
+  <p class="p2">Happy Birthday! 🎂🥳</p>
+</div>
+
+<div class="paper" id="drag-paper">
+  <p class="p1">May your year ahead be filled with blessings, joy, and peace. 🌸</p>
+  <p class="p1">You are truly amazing! 💖</p>
+</div>
+
+<div class="paper">
+  <p class="p1">Drag the papers to move!</p>
+</div>
+
+<script>
+  // JavaScript to enable touch dragging and play audio on interaction with specific paper
+  document.querySelectorAll('.paper').forEach(paper => {
+    let startX, startY, initialX, initialY;
+    const audio = document.getElementById('background-audio');
+
+    const playAudio = () => {
+      if (audio.paused) {
+        audio.play().catch(error => {
+          console.log('Autoplay was prevented by the browser:', error);
+        });
+      }
+    };
+
+    const startTouch = (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      initialX = paper.offsetLeft;
+      initialY = paper.offsetTop;
+
+      // Play audio on first touch interaction with the draggable paper
+      if (paper.id === 'drag-paper') {
+        playAudio();
+      }
+
+      // Improve touch handling performance
+      document.addEventListener('touchmove', moveTouch, { passive: false });
+      document.addEventListener('touchend', endTouch, { passive: false });
+    };
+
+    const moveTouch = (e) => {
+      e.preventDefault(); // Prevent scrolling while dragging
+      const deltaX = e.touches[0].clientX - startX;
+      const deltaY = e.touches[0].clientY - startY;
+      paper.style.left = `${initialX + deltaX}px`;
+      paper.style.top = `${initialY + deltaY}px`;
+    };
+
+    const endTouch = () => {
+      document.removeEventListener('touchmove', moveTouch);
+      document.removeEventListener('touchend', endTouch);
+    };
+
+    paper.addEventListener('touchstart', startTouch);
+  });
+</script>
+
+</body>
+</html>
